@@ -1,6 +1,7 @@
 package com.skobeev.project.dao.impl;
 
 import com.skobeev.project.dao.DepartmentDao;
+import com.skobeev.project.exception.CustomException;
 import com.skobeev.project.model.Department;
 import com.skobeev.project.util.DBConnector;
 
@@ -14,7 +15,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public List<Department> getDepartmentList() {
+    public List<Department> getDepartmentList() throws CustomException {
         List<Department> listDepartment = new ArrayList<Department>();
         connection = DBConnector.getConnection();
         ResultSet resultSet;
@@ -28,7 +29,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 listDepartment.add(department);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't get department list, please try again later");
         }finally {
             DBConnector.closeConnection(connection);
         }

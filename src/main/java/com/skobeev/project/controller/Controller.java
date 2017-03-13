@@ -2,6 +2,7 @@ package com.skobeev.project.controller;
 
 import com.skobeev.project.controller.processor.Processor;
 import com.skobeev.project.controller.processor.impl.*;
+import com.skobeev.project.exception.CustomException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,12 @@ public class Controller extends HttpServlet {
         String url = req.getRequestURI();
         Processor processor = PROCESSOR_MAP.get(url);
         if (processor != null) {
-            processor.service(req, res);
+            try {
+                processor.service(req, res);
+            } catch (CustomException e) {
+                req.setAttribute("error",e.getMessage());
+                req.getRequestDispatcher("/pages/errorPage.jsp").forward(req,res);
+            }
         }
     }
 
