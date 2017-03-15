@@ -24,6 +24,7 @@
         <td>Id</td>
         <td>Name</td>
         <td><a class="btn btn-default" href="${create}" role="button">Add</a></td>
+        <td></td>
     </tr>
     <c:forEach items="${departmentList}" var="department">
         <tr>

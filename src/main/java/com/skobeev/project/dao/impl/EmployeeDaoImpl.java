@@ -1,6 +1,7 @@
 package com.skobeev.project.dao.impl;
 
 import com.skobeev.project.dao.EmployeeDao;
+import com.skobeev.project.exception.CustomException;
 import com.skobeev.project.model.Employee;
 import com.skobeev.project.util.DBConnector;
 
@@ -14,15 +15,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public List<Employee> getEmployeeList() {
+    public List<Employee> getEmployeeList() throws CustomException {
         List<Employee> listEmployee = new ArrayList<Employee>();
         connection = DBConnector.getConnection();
         ResultSet resultSet;
         try {
             Statement statement = connection.createStatement();
-//            if (departmentId == null) {
-                resultSet = statement.executeQuery(GET_EMPLOYEE_LIST);
-//            } else resultSet = statement.executeQuery(GET_EMPLOYEE_LIST_BY_DEP_ID);
+            resultSet = statement.executeQuery(GET_EMPLOYEE_LIST);
             while (resultSet.next()) {
                 Employee employee = new Employee();
                 employee.setId(resultSet.getLong("id"));
@@ -36,22 +35,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't get employee list, please try again later");
         } finally {
             DBConnector.closeConnection(connection);
         }
-
-
         return listEmployee;
     }
 
-    public void saveEmployee(Employee employee) {
+    public void saveEmployee(Employee employee) throws CustomException {
 
         connection = DBConnector.getConnection();
         try {
             if (employee.getId() == null) {
                 preparedStatement = connection.prepareStatement(CREATE_EMPLOYEE);
-            }else {
+            } else {
                 preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE);
                 preparedStatement.setLong(7, employee.getId());
             }
@@ -63,21 +60,33 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setLong(6, employee.getDepartmentId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't save employee, please try again later");
+        } finally {
+            DBConnector.closeConnection(connection);
         }
-
-
     }
 
-    public void deleteEmployee(Long employeeId) {
+    public Employee getEmployeeById(Long id) throws CustomException {
+        Employee employee = new Employee();
         connection = DBConnector.getConnection();
         try {
-            preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE);
-            preparedStatement.setLong(1, employeeId);
-            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement(SELECT_EMPLOYEE_ID);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                employee.setId(resultSet.getLong("id"));
+                employee.setEmployeeName(resultSet.getString("employee_name"));
+                employee.setEmployeeSurname(resultSet.getString("employee_surname"));
+                employee.setEmployeeBirthday(resultSet.getDate("employee_birthday"));
+                employee.setEmployeeSalary(resultSet.getLong("employee_salary"));
+                employee.setEmployeeEmail(resultSet.getString("employee_email"));
+                employee.setDepartmentId(resultSet.getLong("department_id"));
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't get employee list, please try again later");
+        } finally {
+            DBConnector.closeConnection(connection);
         }
-
+        return employee;
     }
 }

@@ -37,7 +37,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
 
-    public void saveDepartment(Department department) {
+    public void saveDepartment(Department department) throws CustomException {
         connection = DBConnector.getConnection();
         try {
             if (department.getId() == null) {
@@ -50,28 +50,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't save department, please try again later");
         }finally {
             DBConnector.closeConnection(connection);
         }
 
     }
 
-    public void deleteDepartment(Long departmentId) {
-        connection = DBConnector.getConnection();
-        try {
-            preparedStatement = connection.prepareStatement(DELETE_DEPARTMENT);
-            preparedStatement.setLong(1, departmentId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DBConnector.closeConnection(connection);
-        }
-
-    }
-
-    public Department getDepartmentListById(Long id) {
+    public Department getDepartmentListById(Long id) throws CustomException {
         Department department = new Department();
         connection = DBConnector.getConnection();
         try {
@@ -83,7 +69,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 department.setDepartmentName(resultSet.getString("department_name"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Can't get department list, please try again later");
         }finally {
             DBConnector.closeConnection(connection);
         }

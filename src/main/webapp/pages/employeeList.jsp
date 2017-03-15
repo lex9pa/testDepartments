@@ -27,7 +27,7 @@
             <td>Salary</td>
             <td>Department's id</td>
             <td><a class="btn btn-default" href="${employeeCreate}" role="button">Add</a></td>
-            <%--<td></td>--%>
+            <td></td>
         </tr>
         <jsp:useBean id="employeeList" scope="request" type="java.util.List"/>
         <c:forEach items="${employeeList}" var="employee">
@@ -44,9 +44,13 @@
             </c:url>
                 <a class="btn btn-default" href="${del}" role="button">Delete</a>
             </td>
-            <td></td>
-            </c:forEach>
+            <td><c:url value="${employeeCreate}" var="edit">
+                <c:param name="id" value="${employee.id}"/>
+            </c:url>
+                <a class="btn btn-default" href="${edit}" role="button">Edit</a>
+            </td>
         </tr>
+        </c:forEach>
     </table>
 </body>
 </html>

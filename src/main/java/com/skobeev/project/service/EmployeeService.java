@@ -1,11 +1,11 @@
-package com.skobeev.project.dao;
+package com.skobeev.project.service;
 
 import com.skobeev.project.exception.CustomException;
 import com.skobeev.project.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeDao {
+public interface EmployeeService {
 
     List<Employee> getEmployeeList() throws CustomException;
 
