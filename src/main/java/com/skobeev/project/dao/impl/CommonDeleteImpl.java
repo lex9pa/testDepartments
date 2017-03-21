@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static com.skobeev.project.constants.QueryConstants.*;
+import static com.skobeev.project.constants.QueryConstants.DELETE_DEPARTMENT;
+import static com.skobeev.project.constants.QueryConstants.DELETE_EMPLOYEE;
 
 public class CommonDeleteImpl implements CommonDelete {
 

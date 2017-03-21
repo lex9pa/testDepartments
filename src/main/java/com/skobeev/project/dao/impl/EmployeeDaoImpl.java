@@ -89,4 +89,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
         return employee;
     }
+
+    public Employee getEmployeeByMail(String employeeEmail) throws CustomException {
+        connection=DBConnector.getConnection();
+        Employee employee=new Employee();
+        try {
+            preparedStatement=connection.prepareStatement(SELECT_EMPLOYEE_MAIL);
+            preparedStatement.setString(1, employeeEmail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                employee.setId(resultSet.getLong("id"));
+            }
+        } catch (SQLException e) {
+            throw new CustomException("Can't get employee list, please try again later");
+        }finally {
+            DBConnector.closeConnection(connection);
+        }
+        return employee;
+    }
 }

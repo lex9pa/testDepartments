@@ -12,4 +12,6 @@ public interface EmployeeDao {
     void saveEmployee(Employee employee) throws CustomException;
 
     Employee getEmployeeById(Long id) throws CustomException;
+
+    Employee getEmployeeByMail(String employeeEmail) throws CustomException;
 }

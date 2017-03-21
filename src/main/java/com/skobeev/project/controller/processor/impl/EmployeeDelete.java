@@ -2,7 +2,9 @@ package com.skobeev.project.controller.processor.impl;
 
 import com.skobeev.project.controller.processor.Processor;
 import com.skobeev.project.exception.CustomException;
-import com.skobeev.project.util.Transformer;
+import com.skobeev.project.model.Employee;
+import com.skobeev.project.service.EmployeeService;
+import com.skobeev.project.service.impl.EmployeeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +15,12 @@ import static com.skobeev.project.constants.PagesConstants.EMPLOYEE_LIST;
 
 public class EmployeeDelete implements Processor {
 
-    private Transformer transformer = new Transformer();
+    private EmployeeService employeeService = new EmployeeServiceImpl();
+    private Employee employee = new Employee();
 
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException, CustomException {
-        transformer.deleteEmployee(req);
+
+        employeeService.delete(employee, Long.parseLong(req.getParameter("id")));
         res.sendRedirect(EMPLOYEE_LIST);
     }
 }

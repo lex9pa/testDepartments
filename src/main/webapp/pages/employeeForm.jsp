@@ -1,3 +1,4 @@
+<jsp:useBean id="departmentList" scope="request" type="java.util.List"/>
 <jsp:useBean id="employee" scope="request" type="java.lang.Object"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,28 +20,52 @@
 <form method="post" action=${EmployeeSave}>
     <input id="id" type="hidden" name="id" value="${employee.id}"/>
     <div class="form-group">
-        <input type="text" name="name" class="form-control" placeholder="Name"
+        <label for="Name">Name</label>
+        <input id="Name" type="text" name="name" class="form-control" placeholder="Name"
                value="${employee.employeeName}"/>
     </div>
+    <p>
+        <small>${error.employeeName}</small>
+    </p>
     <div class="form-group">
-        <input type="text" name="surname" class="form-control" placeholder="Surname"
+        <label for="surname">Surname</label>
+        <input id="surname" type="text" name="surname" class="form-control" placeholder="Surname"
                value="${employee.employeeSurname}"/>
     </div>
+    <p>
+        <small>${error.employeeSurname}</small>
+    </p>
     <div class="form-group">
-        <input type="email" name="email" class="form-control" placeholder="E-mail" value="${employee.employeeEmail}"/>
+        <label for="email">E-mail</label>
+        <input id="email" type="email" name="email" class="form-control" placeholder="E-mail"
+               value="${employee.employeeEmail}"/>
     </div>
+    <p>
+        <small>${error.employeeEmail}</small>
+    </p>
     <div class="form-group">
         <label for="Birthday">Birthday</label>
         <input id="Birthday" type="date" name="birthday" class="form-control"
                value="${employee.employeeBirthday}"/>
     </div>
+    <p>
+        <small>${error.employeeBirthday}</small>
+    </p>
     <div class="form-group">
-        <input type="number" name="salary" class="form-control" placeholder="Salary"
+        <label for="salary">Salary</label>
+        <input id="salary" type="number" name="salary" class="form-control" placeholder="Salary"
                value="${employee.employeeSalary}"/>
     </div>
+    <p>
+        <small>${error.employeeSalary}</small>
+    </p>
     <div class="form-group">
-        <input type="number" name="departmentId" class="form-control" placeholder="Department ID"
-               value="${employee.departmentId}"/>
+        <label for="department">Department</label>
+        <select id="department" name="departmentId">
+            <c:forEach items="${departmentList}" var="department">
+                <option value="${department.id}"><c:out value="${department.departmentName}"/></option>
+            </c:forEach>
+        </select>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>

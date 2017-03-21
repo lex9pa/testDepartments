@@ -12,4 +12,6 @@ public interface DepartmentDao {
     void saveDepartment(Department department) throws CustomException;
 
     Department getDepartmentListById(Long id) throws CustomException;
+
+    Department getDepartmentByName(String department_name) throws CustomException;
 }

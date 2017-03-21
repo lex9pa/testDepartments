@@ -27,6 +27,13 @@
       <version>1.2</version>
     </dependency>
 
+    <dependency>
+      <groupId>net.sf.oval</groupId>
+      <artifactId>oval</artifactId>
+      <version>1.31</version>
+    </dependency>
+
+
   </dependencies>
   <build>
     <finalName>departments</finalName>

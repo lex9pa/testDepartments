@@ -33,8 +33,8 @@ public class Controller extends HttpServlet {
             try {
                 processor.service(req, res);
             } catch (CustomException e) {
-                req.setAttribute("error",e.getMessage());
-                req.getRequestDispatcher("/pages/errorPage.jsp").forward(req,res);
+                req.setAttribute("error", e.getMessage());
+                req.getRequestDispatcher("/pages/errorPage.jsp").forward(req, res);
             }
         }
     }

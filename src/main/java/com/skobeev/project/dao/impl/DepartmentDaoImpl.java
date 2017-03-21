@@ -30,7 +30,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             }
         } catch (SQLException e) {
             throw new CustomException("Can't get department list, please try again later");
-        }finally {
+        } finally {
             DBConnector.closeConnection(connection);
         }
         return listDepartment;
@@ -51,7 +51,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new CustomException("Can't save department, please try again later");
-        }finally {
+        } finally {
             DBConnector.closeConnection(connection);
         }
 
@@ -70,7 +70,25 @@ public class DepartmentDaoImpl implements DepartmentDao {
             }
         } catch (SQLException e) {
             throw new CustomException("Can't get department list, please try again later");
-        }finally {
+        } finally {
+            DBConnector.closeConnection(connection);
+        }
+        return department;
+    }
+
+    public Department getDepartmentByName(String department_name) throws CustomException {
+        Department department = new Department();
+        connection = DBConnector.getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_DEPARTMENT_BY_NAME);
+            preparedStatement.setString(1, department_name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                department.setId(resultSet.getLong("id"));
+            }
+        } catch (Exception e) {
+            throw new CustomException("Can't get department list, please try again later");
+        } finally {
             DBConnector.closeConnection(connection);
         }
         return department;

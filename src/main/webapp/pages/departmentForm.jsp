@@ -22,6 +22,9 @@
         <input class="form-control" type="text" name="name" placeholder="Name"
                value="${department.departmentName}"/>
     </div>
+    <p>
+        <small>${error.departmentName}</small>
+    </p>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 </body>

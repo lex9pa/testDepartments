@@ -15,8 +15,8 @@ import java.util.List;
 import static com.skobeev.project.constants.PagesConstants.EMPLOYEE_LIST_JSP;
 
 public class EmployeeList implements Processor {
-    private EmployeeService employeeService = new EmployeeServiceImpl();
 
+    private EmployeeService employeeService = new EmployeeServiceImpl();
 
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException, CustomException {
         List<Employee> employee = employeeService.getEmployeeList();
