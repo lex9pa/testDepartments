@@ -9,6 +9,7 @@ import net.sf.oval.constraint.CheckWithCheck;
 public class DepartmentNameValidation implements CheckWithCheck.SimpleCheck {
 
     public boolean isSatisfied(Object validatedObject, Object value) {
+
         DepartmentService departmentService = new DepartmentServiceImpl();
         Department department = null;
         if (validatedObject instanceof Department) {
